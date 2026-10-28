@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daftar Hadir Rapat</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Daftar Hadir Rapat</h1>
+      <p class="subtitle" id="rapatInfo">Memuat info rapat...</p>
+    </header>
+
+    <form id="hadirForm">
+      <div class="field">
+        <label for="nama">Nama Lengkap <span class="req">*</span></label>
+        <input type="text" id="nama" name="nama" required placeholder="Nama lengkap">
+      </div>
+
+      <div class="field">
+        <label for="nip">NIP <span class="req">*</span></label>
+        <input type="text" id="nip" name="nip" required placeholder="NIP" inputmode="numeric">
+      </div>
+
+      <div class="field">
+        <label for="sekolah">Asal Instansi / Sekolah <span class="req">*</span></label>
+        <input type="text" id="sekolah" name="sekolah" required placeholder="Contoh: SDN 1 Sukamaju">
+      </div>
+
+      <div class="field">
+        <label>Tanda Tangan <span class="req">*</span></label>
+        <div class="signature-wrapper">
+          <canvas id="signatureCanvas"></canvas>
+          <button type="button" id="clearBtn" class="clear-btn">Hapus</button>
+        </div>
+        <p class="hint">Gambar tanda tangan pakai jari di area di atas.</p>
+      </div>
+
+      <button type="submit" id="submitBtn" class="submit-btn">Kirim Kehadiran</button>
+      <p id="statusMsg" class="status"></p>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
