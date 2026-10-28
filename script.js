@@ -1,4 +1,4 @@
-// GANTI DENGAN URL APPS SCRIPT BAPAK YANG BARU
+// 1. GANTI DENGAN URL APPS SCRIPT BAPAK YANG PALING BARU (yang berakhiran /exec)
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRTQzftnKv1frVW88KIqKyP3UtklKk3eUgMTe-38fO2iNpwTtEnCarsOOfkcOT8pP6Qg/exec";
 
 const params = new URLSearchParams(window.location.search);
@@ -54,24 +54,26 @@ document.getElementById("hadirForm").addEventListener("submit", async (e) => {
   };
 
   try {
-    // Trik fetch anti-CORS
+    // 2. KODE INI KITA GUNAKAN UNTUK MELIHAT ERROR ASLINYA
     const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
-      mode: "no-cors", // INI KUNCI AGAR TIDAK FAILED TO FETCH
-      headers: {
-        "Content-Type": "application/json"
-      },
       body: JSON.stringify(payload),
     });
+    
+    // Jika server Google membalas dengan error, kita tangkap
+    const result = await res.json();
+    console.log("Balasan dari Google:", result);
 
-    // Karena pakai no-cors, kita tidak bisa membaca balasan Google (res.json)
-    // Jadi jika tidak masuk catch, kita anggap sukses
-    statusMsg.textContent = "✅ Kehadiran berhasil dicatat. Terima kasih!";
-    statusMsg.className = "status success";
-    document.getElementById("hadirForm").reset();
-    signaturePad.clear();
-
+    if (result.status === "success") {
+      statusMsg.textContent = "✅ Kehadiran berhasil dicatat. Terima kasih!";
+      statusMsg.className = "status success";
+      document.getElementById("hadirForm").reset();
+      signaturePad.clear();
+    } else {
+      throw new Error(result.message || "Gagal menyimpan");
+    }
   } catch (err) {
+    console.error("Error detail:", err);
     statusMsg.textContent = "❌ " + err.message;
     statusMsg.className = "status error";
   } finally {
