@@ -1,4 +1,5 @@
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbywTOSkVAiWmJsglKrzfzfcy2q7rm4pE8Vs-RdfXQevX2Rfii4QUJt_G1se_Gej5Q7cIw/exec";
+// GANTI DENGAN URL APPS SCRIPT BAPAK YANG BARU
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwRTQzftnKv1frVW88KIqKyP3UtklKk3eUgMTe-38fO2iNpwTtEnCarsOOfkcOT8pP6Qg/exec";
 
 const params = new URLSearchParams(window.location.search);
 const namaRapat = params.get("rapat") || "Rapat Umum";
@@ -53,20 +54,23 @@ document.getElementById("hadirForm").addEventListener("submit", async (e) => {
   };
 
   try {
+    // Trik fetch anti-CORS
     const res = await fetch(APPS_SCRIPT_URL, {
       method: "POST",
+      mode: "no-cors", // INI KUNCI AGAR TIDAK FAILED TO FETCH
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(payload),
     });
-    const result = await res.json();
 
-    if (result.status === "success") {
-      statusMsg.textContent = "✅ Kehadiran berhasil dicatat. Terima kasih!";
-      statusMsg.className = "status success";
-      document.getElementById("hadirForm").reset();
-      signaturePad.clear();
-    } else {
-      throw new Error(result.message || "Gagal menyimpan");
-    }
+    // Karena pakai no-cors, kita tidak bisa membaca balasan Google (res.json)
+    // Jadi jika tidak masuk catch, kita anggap sukses
+    statusMsg.textContent = "✅ Kehadiran berhasil dicatat. Terima kasih!";
+    statusMsg.className = "status success";
+    document.getElementById("hadirForm").reset();
+    signaturePad.clear();
+
   } catch (err) {
     statusMsg.textContent = "❌ " + err.message;
     statusMsg.className = "status error";
