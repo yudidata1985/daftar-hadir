@@ -22,6 +22,20 @@ function resizeCanvas() {
 window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
 
+// Logika Dropdown Jabatan
+document.getElementById("jabatan").addEventListener("change", function() {
+  const kolomLainnya = document.getElementById("kolomLainnya");
+  const inputLainnya = document.getElementById("jabatanLainnya");
+  if (this.value === "Lain-lain") {
+    kolomLainnya.style.display = "block";
+    inputLainnya.required = true;
+  } else {
+    kolomLainnya.style.display = "none";
+    inputLainnya.required = false;
+    inputLainnya.value = ""; 
+  }
+});
+
 document.getElementById("clearBtn").addEventListener("click", () => {
   signaturePad.clear();
 });
@@ -34,6 +48,10 @@ document.getElementById("hadirForm").addEventListener("submit", async (e) => {
   const nama = document.getElementById("nama").value.trim();
   const nip = document.getElementById("nip").value.trim();
   const sekolah = document.getElementById("sekolah").value.trim();
+
+  const jabatanUtama = document.getElementById("jabatan").value;
+const jabatanLainnya = document.getElementById("jabatanLainnya").value.trim();
+const jabatanFinal = jabatanUtama === "Lain-lain" ? jabatanLainnya : jabatanUtama;
 
   if (signaturePad.isEmpty()) {
     statusMsg.textContent = "Tanda tangan wajib diisi.";
@@ -49,6 +67,7 @@ document.getElementById("hadirForm").addEventListener("submit", async (e) => {
     nama: nama,
     nip: nip,
     sekolah: sekolah,
+    jabatan: jabatanFinal,
     rapat: namaRapat,
     tandaTangan: signaturePad.toDataURL("image/png"),
   };
