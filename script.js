@@ -1,5 +1,4 @@
-// 1. GANTI DENGAN URL APPS SCRIPT BAPAK YANG BERAKHIRAN /exec
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzroRIsVcP6liwzXOkJm8IvyjtUV5F6sn1OTFrIIQJ7ygkboYO5KW0XQLGcBERPUrNGyA/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwYLuRuOHDuVjRc2DD6fDdoNDA_taIblzGPkZTjxC_-6BzHSsH4XekIfbJcV3Odv6FO-A/exec";
 
 const params = new URLSearchParams(window.location.search);
 const namaRapat = params.get("rapat") || "Rapat Umum";
@@ -48,10 +47,10 @@ document.getElementById("hadirForm").addEventListener("submit", async (e) => {
   const nama = document.getElementById("nama").value.trim();
   const nip = document.getElementById("nip").value.trim();
   const sekolah = document.getElementById("sekolah").value.trim();
-
+  
   const jabatanUtama = document.getElementById("jabatan").value;
-const jabatanLainnya = document.getElementById("jabatanLainnya").value.trim();
-const jabatanFinal = jabatanUtama === "Lain-lain" ? jabatanLainnya : jabatanUtama;
+  const jabatanLainnya = document.getElementById("jabatanLainnya").value.trim();
+  const jabatanFinal = jabatanUtama === "Lain-lain" ? jabatanLainnya : jabatanUtama;
 
   if (signaturePad.isEmpty()) {
     statusMsg.textContent = "Tanda tangan wajib diisi.";
@@ -73,25 +72,19 @@ const jabatanFinal = jabatanUtama === "Lain-lain" ? jabatanLainnya : jabatanUtam
   };
 
   try {
-    // Mengirim data ke Google Apps Script
     await fetch(APPS_SCRIPT_URL, {
       method: "POST",
-      mode: "no-cors", // Trik agar browser tidak memblokir pengiriman
+      mode: "no-cors", 
       body: JSON.stringify(payload),
     });
     
-    // Karena pakai no-cors, kita paksa tampilkan pesan sukses
-    // (Tidak perlu membaca balasan dari Google)
     statusMsg.textContent = "✅ Kehadiran berhasil dicatat. Terima kasih!";
     statusMsg.className = "status success";
-    
-    // Kosongkan form dan tanda tangan
     document.getElementById("hadirForm").reset();
     signaturePad.clear();
+    document.getElementById("kolomLainnya").style.display = "none";
 
   } catch (err) {
-    // Ini hanya akan muncul jika internet mati total
-    console.error("Error detail:", err);
     statusMsg.textContent = "❌ Gagal mengirim. Periksa koneksi internet Anda.";
     statusMsg.className = "status error";
   } finally {
