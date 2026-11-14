@@ -31,6 +31,21 @@
       </div>
 
       <div class="field">
+  <label for="jabatan">Jabatan <span class="req">*</span></label>
+  <select id="jabatan" name="jabatan" required style="width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e0; border-radius: 10px; font-size: 1rem; background-color: #fff;">
+    <option value="" disabled selected>Pilih Jabatan...</option>
+    <option value="Guru">Guru</option>
+    <option value="Kepala Sekolah">Kepala Sekolah</option>
+    <option value="Lain-lain">Lain-lain</option>
+  </select>
+</div>
+
+<div class="field" id="kolomLainnya" style="display: none;">
+  <label for="jabatanLainnya">Sebutkan Jabatan Lainnya <span class="req">*</span></label>
+  <input type="text" id="jabatanLainnya" name="jabatanLainnya" placeholder="Contoh: Pengawas, Komite, dll">
+</div>
+
+      <div class="field">
         <label>Tanda Tangan <span class="req">*</span></label>
         <div class="signature-wrapper">
           <canvas id="signatureCanvas"></canvas>
