@@ -1,5 +1,5 @@
 // 1. GANTI DENGAN URL APPS SCRIPT BAPAK YANG BERAKHIRAN /exec
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVe82Eg3QCbZjd9EDmLnMtNUkUUv4D8oss9LQEjkfXwy6iStFKVq0if2DIFYd8fuO1zQ/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzroRIsVcP6liwzXOkJm8IvyjtUV5F6sn1OTFrIIQJ7ygkboYO5KW0XQLGcBERPUrNGyA/exec";
 
 const params = new URLSearchParams(window.location.search);
 const namaRapat = params.get("rapat") || "Rapat Umum";
